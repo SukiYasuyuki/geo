@@ -42,11 +42,9 @@ function Countries({ path }) {
 
 const antipode = ([longitude, latitude]) => [longitude + 180, -latitude]
 
-function Shade({ projection, date = new Date() }) {
+function Shade({ path, date = new Date() }) {
 
   const { lat, lng } = getSunLatLng(date);
-
-  const path = geoPath().projection(projection);
   const night = geoCircle().radius(90).center(antipode([lng, lat]))
   //const sun = geoCircle().radius(90).center([lng, lat])
 
@@ -141,8 +139,8 @@ function SphereMap({ width = 400, height = 400, date = new Date() }){
     <svg width={width} height={height}>
       <Countries path={path} />
       <Lines projection={orbitProjection} date={date} path={geoPath().projection(orbitProjection)}/>
-      <Grid path={path}  projection={projection}/>
-      <Shade path={path}  projection={projection} />
+      <Grid path={path} projection={projection}/>
+      <Shade path={path} date={date}/>
 
     </svg>
   );
@@ -170,7 +168,7 @@ function EquirectangularMap({ width = 800, height = 400, date = new Date() }) {
     <svg width={width} height={height} ref={ref}>
       <Countries path={path} />
       <Grid path={path}  projection={projection}/>
-      <Shade path={path}  projection={projection}date={date}/>
+      <Shade path={path}  date={date}/>
       <Lines projection={projection} date={date} path={path}/>
 
     </svg>
